@@ -1,58 +1,58 @@
-let currentInput = '';
-let previousInput = '';
-let operation = null;
+let currentInput = "";
+let operation = "";
+let previousInput = "";
 
 const appendNumber = (number) => {
   currentInput += number;
-  updateDisplay();
+  updateDisplay(currentInput);
 };
 
 const setOperation = (op) => {
-  if (currentInput === '') return;
-  if (previousInput !== '') {
-    calculate();
+  if (currentInput === "") return; // No hacer nada si no hay número
+  if (previousInput !== "") {
+    calculate(); // Calcular si hay una operación previa
   }
   operation = op;
   previousInput = currentInput;
-  currentInput = '';
+  currentInput = "";
 };
 
 const calculate = () => {
-  if (previousInput === '' || currentInput === '') return;
-  const num1 = parseFloat(previousInput);
-  const num2 = parseFloat(currentInput);
-
   let result;
+  const prev = parseFloat(previousInput);
+  const current = parseFloat(currentInput);
+  if (isNaN(prev) || isNaN(current)) return; // Verificar si los valores son números
+
   switch (operation) {
-    case '+':
-      result = num1 + num2;
+    case "+":
+      result = prev + current;
       break;
-    case '-':
-      result = num1 - num2;
+    case "-":
+      result = prev - current;
       break;
-    case '*':
-      result = num1 * num2;
+    case "*":
+      result = prev * current;
       break;
-    case '/':
-      result = num1 / num2;
+    case "/":
+      result = prev / current;
       break;
     default:
       return;
   }
-
-  currentInput = `${result}`;
-  operation = null;
-  previousInput = '';
-  updateDisplay();
+  currentInput = result.toString();
+  operation = "";
+  previousInput = "";
+  updateDisplay(currentInput);
 };
 
 const clearDisplay = () => {
-  currentInput = '';
-  previousInput = '';
-  operation = null;
-  updateDisplay();
+  currentInput = "";
+  previousInput = "";
+  operation = "";
+  updateDisplay("");
 };
 
-const updateDisplay = () => {
-  document.getElementById('display').value = currentInput;
+const updateDisplay = (value) => {
+  document.getElementById("display").value = `${value}`; // Usar template string
 };
+
